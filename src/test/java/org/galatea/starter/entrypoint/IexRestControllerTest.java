@@ -81,4 +81,61 @@ public class IexRestControllerTest extends ASpringTest {
         .andExpect(jsonPath("$", is(Collections.emptyList())))
         .andReturn();
   }
+
+
+  @Test
+  public void testGetHistoricalPriceByRange() throws Exception {
+
+    MvcResult result = this.mvc.perform(
+        org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+            .get("/iex/historicalPrice?symbol=IBM&range=1m")
+            .accept(MediaType.APPLICATION_JSON_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$[0].symbol", is("IBM")))
+        .andExpect(jsonPath("$[0].close").value(new BigDecimal("146.17")))
+        .andExpect(jsonPath("$[0].high").value(new BigDecimal("148.38")))
+        .andExpect(jsonPath("$[0].low").value(new BigDecimal("145.8")))
+        .andExpect(jsonPath("$[0].open").value(new BigDecimal("145.8")))
+        .andExpect(jsonPath("$[0].volume").value(new BigDecimal("6983377")))
+        .andExpect(jsonPath("$[0].date", is("2021-05-10")))
+        .andReturn();
+  }
+
+  @Test
+  public void testGetHistoricalPriceByDate() throws Exception {
+
+    MvcResult result = this.mvc.perform(
+        org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+            .get("/iex/historicalPrice?symbol=JPM&date=20210601")
+            .accept(MediaType.APPLICATION_JSON_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$[0].symbol", is("JPM")))
+        .andExpect(jsonPath("$[0].close").value(new BigDecimal("125.87")))
+        .andExpect(jsonPath("$[0].high").value(new BigDecimal("127.8579")))
+        .andExpect(jsonPath("$[0].low").value(new BigDecimal("124.78")))
+        .andExpect(jsonPath("$[0].open").value(new BigDecimal("127.5")))
+        .andExpect(jsonPath("$[0].volume").value(new BigDecimal("16819915")))
+        .andReturn();
+  }
+
+  @Test
+  public void testGetHistoricalPriceNoSymbol() throws Exception {
+    MvcResult result = this.mvc.perform(
+        org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+            .get("/iex/historicalPrice")
+            .accept(MediaType.APPLICATION_JSON_VALUE))
+        .andExpect(status().isBadRequest())
+        .andReturn();
+  }
+
+  @Test
+  public void testGetHistoricalPriceEmpty() throws Exception {
+    MvcResult result = this.mvc.perform(
+        org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+            .get("/iex/historicalPrices?symbol=")
+            .accept(MediaType.APPLICATION_JSON_VALUE))
+        .andExpect(status().isNotFound())
+        .andReturn();
+  }
+
 }

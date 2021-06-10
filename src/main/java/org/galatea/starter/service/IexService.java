@@ -48,18 +48,50 @@ public class IexService {
     }
   }
 
-  // TODO: comment and documentation
-
-  public List<IexHistoricalPrice> getHistoricalPriceForSymbols(final String symbol) {
+  /**
+   * Get the historical price data for a given stock symbol.
+   *
+   * @param symbol stock symbol to get historical data for.
+   * @return a list of historical price data for the given symbol.
+   */
+  public List<IexHistoricalPrice> getHistoricalPriceForSymbol(final String symbol) {
     log.info("Retrieving historical price data with symbol {}", symbol);
-    return iexCloudClient.getHistoricalPriceForSymbols(symbol);
+    return iexCloudClient.getHistoricalPriceForSymbol(symbol);
   }
 
-  public List<IexHistoricalPrice> getHistoricalPriceWithRange(final String symbol, final String range) {
+  /**
+   * Get the historical price data for a given stock symbol.
+   *
+   * @param symbol stock symbol to get historical data for.
+   * @param range specified time range of the request.
+   * @return a list of historical price data for the given symbol and range.
+   */
+  public List<IexHistoricalPrice> getHistoricalPriceByRange(final String symbol,
+      final String range) {
     log.info("Retrieving historical price data with symbol {}, range{}", symbol, range);
-    return iexCloudClient.getHistoricalPriceWithRange(symbol, range);
+    return iexCloudClient.getHistoricalPriceByRange(symbol, range);
   }
 
+  /**
+   * Get the historical price data for a given stock symbol.
+   *
+   * @param symbol stock symbol to get historical data for.
+   * @param date specified date in the format YYYYMMDD.
+   * @return a list of historical price data for the given symbol, range, and date.
+   */
+  public List<IexHistoricalPrice> getHistoricalPriceByDate(final String symbol, final String date) {
+    log.info("Retrieving historical price data with symbol {}, date {}", symbol, date);
+    return iexCloudClient.getHistoricalPriceByDate(symbol, date);
+  }
+
+  /**
+   * Get the historical price data for a given stock symbol.
+   *
+   * @param symbol stock symbol to get historical data for.
+   * @param range specified time range of the request.
+   * @param date specified date in the format YYYYMMDD.
+   * @return a list of historical price data for the given symbol, range, and date.
+   */
   public List<IexHistoricalPrice> getHistoricalPriceByDate(final String symbol, final String range,
       final String date) {
     log.info("Retrieving historical price data with symbol {}, range {}, date {}",

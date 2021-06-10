@@ -49,22 +49,30 @@ public class IexRestController {
     return iexService.getLastTradedPriceForSymbols(symbols);
   }
 
-  // TODO: comment and documentation
-
+  /**
+   * Get the historical price data for a given stock symbol.
+   *
+   * @param symbol stock symbol to get historical data for.
+   * @param range specified time range of the request.
+   * @param date specified date in the format YYYYMMDD.
+   * @return a list of historical price data for the given symbol, range, and date.
+   */
   @GetMapping(value = "${mvc.iex.getHistoricalPricePath}", produces = {
       MediaType.APPLICATION_JSON_VALUE})
   public List<IexHistoricalPrice> getHistoricalPrice(
-      @RequestParam(value = "symbols") final String symbol,
+      @RequestParam(value = "symbol") final String symbol,
       @RequestParam(value = "range", required = false) final String range,
       @RequestParam(value = "date", required = false) final String date) {
-    log.info("Retrieving historical price data with symbol {}, range {}, date {}", symbol, range,
-        date);
-    if (date != null) {
-      return iexService.getHistoricalPriceByDate(symbol, range, date);
+    if (date == null && range == null) {
+      return iexService.getHistoricalPriceForSymbol(symbol);
     }
-    if (range != null) {
-      return iexService.getHistoricalPriceWithRange(symbol, range);
+    if (date == null) {
+      return iexService.getHistoricalPriceByRange(symbol, range);
     }
-    return iexService.getHistoricalPriceForSymbols(symbol);
+    if (range == null) {
+      return iexService.getHistoricalPriceByDate(symbol, date);
+    }
+    return iexService.getHistoricalPriceByDate(symbol, range, date);
   }
+
 }

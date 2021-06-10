@@ -361,27 +361,27 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-<!--			<plugin>-->
-<!--				<groupId>org.apache.maven.plugins</groupId>-->
-<!--				<artifactId>maven-checkstyle-plugin</artifactId>-->
-<!--				<version>3.1.0</version>-->
-<!--				<configuration>-->
-<!--					<configLocation>style/google_checks_modified.xml</configLocation>-->
-<!--					<violationSeverity>warning</violationSeverity>-->
-<!--					<excludes>**/ProtobufMessages.java</excludes>-->
-<!--				</configuration>-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						&lt;!&ndash; Run checkstyle as part of the validate phase &ndash;&gt;-->
-<!--						<phase>validate</phase>-->
-<!--						&lt;!&ndash; See https://maven.apache.org/plugins/maven-checkstyle-plugin/plugin-info.html-->
-<!--						     for the different checkstyle goals&ndash;&gt;-->
-<!--						<goals>-->
-<!--							<goal>check</goal>-->
-<!--						</goals>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--			</plugin>-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<configLocation>style/google_checks_modified.xml</configLocation>
+					<violationSeverity>warning</violationSeverity>
+					<excludes>**/ProtobufMessages.java</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<!-- Run checkstyle as part of the validate phase -->
+						<phase>validate</phase>
+						<!-- See https://maven.apache.org/plugins/maven-checkstyle-plugin/plugin-info.html
+						     for the different checkstyle goals-->
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>

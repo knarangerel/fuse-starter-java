@@ -1,5 +1,11 @@
 package org.galatea.starter.entrypoint;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -63,16 +69,7 @@ public class IexRestController {
       @RequestParam(value = "symbol") final String symbol,
       @RequestParam(value = "range", required = false) final String range,
       @RequestParam(value = "date", required = false) final String date) {
-    if (date == null && range == null) {
-      return iexService.getHistoricalPriceForSymbol(symbol);
-    }
-    if (date == null) {
-      return iexService.getHistoricalPriceByRange(symbol, range);
-    }
-    if (range == null) {
-      return iexService.getHistoricalPriceByDate(symbol, date);
-    }
-    return iexService.getHistoricalPriceByDate(symbol, range, date);
+    return iexService.getHistoricalPrice(symbol, range, date);
   }
 
 }

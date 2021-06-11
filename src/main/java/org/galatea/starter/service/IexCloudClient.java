@@ -57,7 +57,7 @@ public interface IexCloudClient {
    * @return  a list of historical price data on date, possibly with range.
    */
   @GetMapping("/stock/{symbol}/chart/{range}/{date}?token=${spring.rest.iexApiToken}")
-  List<IexHistoricalPrice> getHistoricalPriceByDate(@PathVariable("symbol") String symbol,
+  List<IexHistoricalPrice> getHistoricalPriceByRangeDate(@PathVariable("symbol") String symbol,
       @PathVariable("range") String range, @PathVariable("date") String date);
 
 }

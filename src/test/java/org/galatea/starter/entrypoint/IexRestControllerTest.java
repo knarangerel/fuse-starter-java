@@ -132,10 +132,32 @@ public class IexRestControllerTest extends ASpringTest {
   public void testGetHistoricalPriceEmpty() throws Exception {
     MvcResult result = this.mvc.perform(
         org.springframework.test.web.servlet.request.MockMvcRequestBuilders
-            .get("/iex/historicalPrices?symbol=")
+            .get("/iex/historicalPrice?symbol=")
             .accept(MediaType.APPLICATION_JSON_VALUE))
-        .andExpect(status().isNotFound())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", is(Collections.emptyList())))
         .andReturn();
   }
 
+  @Test
+  public void testGetHistoricalPriceBadDate() throws Exception {
+    MvcResult result = this.mvc.perform(
+        org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+            .get("/iex/historicalPrice?symbol=FB&date=00000000")
+            .accept(MediaType.APPLICATION_JSON_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", is(Collections.emptyList())))
+        .andReturn();
+  }
+
+  @Test
+  public void testGetHistoricalPriceBadRange() throws Exception {
+    MvcResult result = this.mvc.perform(
+        org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+            .get("/iex/historicalPrice?symbol=FB&range=4m")
+            .accept(MediaType.APPLICATION_JSON_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", is(Collections.emptyList())))
+        .andReturn();
+  }
 }

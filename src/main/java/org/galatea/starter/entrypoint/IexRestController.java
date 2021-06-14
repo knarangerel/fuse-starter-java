@@ -1,11 +1,18 @@
 package org.galatea.starter.entrypoint;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.aspect4log.Log;
 import net.sf.aspect4log.Log.Level;
+import org.galatea.starter.domain.IexHistoricalPrice;
 import org.galatea.starter.domain.IexLastTradedPrice;
 import org.galatea.starter.domain.IexSymbol;
 import org.galatea.starter.service.IexService;
@@ -46,6 +53,23 @@ public class IexRestController {
   public List<IexLastTradedPrice> getLastTradedPrice(
       @RequestParam(value = "symbols") final List<String> symbols) {
     return iexService.getLastTradedPriceForSymbols(symbols);
+  }
+
+  /**
+   * Get the historical price data for a given stock symbol.
+   *
+   * @param symbol stock symbol to get historical data for.
+   * @param range specified time range of the request.
+   * @param date specified date in the format YYYYMMDD.
+   * @return a list of historical price data for the given symbol, range, and date.
+   */
+  @GetMapping(value = "${mvc.iex.getHistoricalPricePath}", produces = {
+      MediaType.APPLICATION_JSON_VALUE})
+  public List<IexHistoricalPrice> getHistoricalPrice(
+      @RequestParam(value = "symbol") final String symbol,
+      @RequestParam(value = "range", required = false) final String range,
+      @RequestParam(value = "date", required = false) final String date) {
+    return iexService.getHistoricalPrice(symbol, range, date);
   }
 
 }
